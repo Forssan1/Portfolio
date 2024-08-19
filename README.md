@@ -1,5 +1,6 @@
 # **Erik Forssell Portfolio**
-An overview of the bigger games i've made
+An overview of the bigger games i've made.
+Click on the title of each game for more info
 
 # Games:
 
