@@ -27,4 +27,22 @@ There was a problem with this. The AI required a nav mesh that only registers th
 <br/> 
 on solid ground. I didn't manage to find any previous example of the built in Ai in the air either.
 <br/> 
-Having a invisible ground instead didn't give enough flexibilty that i wanted.
+Having a invisible ground instead didn't give the flexibilty that i wanted either.
+<br/>
+<img src="Images/AI.gif" />
+<br/> 
+(i didn't have the correct whale model yet)
+
+### An alternative method
+Instead of using actual AI, i decided to use splines to have more control over the whales.
+<br/> 
+To make it more natural feeling i decided to make a system so that the whales could switch between different
+<br/> 
+splines/routes seamlessly. Although i tried my best and got it to work 95% of times, there were enough bugs, 
+<br/> 
+too many tasks left and barely any time to complete it.
+<br/>
+<img src="Images/AI.gif" />
+<br/> 
+
+### The final solution
