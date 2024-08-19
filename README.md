@@ -3,7 +3,7 @@ An overview of the bigger games i've made
 
 # Games:
 
-## Starlit Seas
+## [Starlit Seas](StarlitSeas/README.md)
 Developed: 2024 April - 2024 June 
 <br/>
 Engine: Unreal Engine 5.3
@@ -13,7 +13,7 @@ Genre: Platformer, First-Person, Fantasy
 <img src="Images/StarlitSeas1.png" width = 400 /> <img src="Images/StarlitSeas2.png" width = 400  />
 <br/>
 <br/>
-## Parenthood
+## [Parenthood](Parenthood/README.md)
 Developed: 2023 November - 2024 January 
 <br/>
 Engine: Unity
