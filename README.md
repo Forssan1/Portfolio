@@ -1,7 +1,9 @@
-# Erik Forssell Portfolio 
-# Games I've made:
+# **Erik Forssell Portfolio**
+A Collection of the bigger games i've done.
 
-# Starlit Seas
+# Games:
+
+## Starlit Seas
 Developed: 2024 April - 2024 June 
 <br/>
 Engine: Unreal Engine 5.3
@@ -11,7 +13,7 @@ Genre: Platformer, First-Person, Fantasy
 <img src="Images/StarlitSeas1.png" width = 400 /> <img src="Images/StarlitSeas2.png" width = 400  />
 <br/>
 <br/>
-# Parenthood
+## Parenthood
 Developed: 2023 November - 2024 January 
 <br/>
 Engine: Unity
