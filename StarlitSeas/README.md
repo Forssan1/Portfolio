@@ -106,3 +106,28 @@ Links to relevant blueprints:
 [Jellyfish_01](https://blueprintue.com/blueprint/a53mtjgq/)
 [JellyfishElectricity](https://blueprintue.com/blueprint/wv68_grw/)
 [Jellyfish_02](https://blueprintue.com/blueprint/e8uqgz5r/)
+
+##
+
+## List of smaller things i did
+<details>
+<summary>Boost Ring</summary>
+<img src="Images/BoostRing.gif" width="600"/><br/>
+</details>
+
+<details>
+<summary>Fog</summary>
+<img src="Images/Fog.gif" width="600"/><br/>
+</details>
+
+<details>
+<summary>Scanning</summary>
+<img src="Images/Scanning.gif" width="600"/><br/> As a fun little end credits joke i suggested to the group to scan <br/> everyone in dumb poses and put ourselves inside the game using polycam <br/> (I'm the one by the computer)
+</details>
+
+<details>
+<summary>Omptimization</summary>
+
+due to lack of perfomance i tried to optimize as much as possible with<br/>foliage reduction, culling, LOD, nanite and so on.
+</details>
+
