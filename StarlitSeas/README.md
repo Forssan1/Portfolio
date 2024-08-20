@@ -71,10 +71,38 @@ didn't have time to make it much better
 |As for the animation where i wanted the hands to show as the player wakes up in a foreign place, i took a mixamo animation. The Skeletal mesh i got from the artist wasn't compatible though so i had to retarget the player SM to the mixamo SM.| <img src="Images/Cinematic1.gif" width="500"/><br/>  |       |
 |Blinking|       | 
 |I also wanted to add some blinking so that it really feels like you've just woken up. I made a material that looks like the eyelids around the camera and applied it to a post process component that was attached to the skeletal mesh. Finally i added a variable that i could change wherever that changed the sphere mask making it seem as if the eyelids closed and opened.|<img src="Images/Blinking.gif" width="600"/><br/>|
+|The Final Product|       | 
+|Finally i put it all together and it looks like this: <br/> <br/>It's a bit longer and better looking in the actual game.|<img src="Images/Cinematic2.gif" width="600"/><br/>|
+
+Links to relevant blueprints:
+[BlinkingMaterial](https://blueprintue.com/blueprint/c5bvtwnn/)
+[BlinkingBlueprint](https://blueprintue.com/blueprint/33l218--/)
+
+##
+
+
+## Jellyfish Enemies
+During development we realised that some type of obstacle is needed.
+<br/> 
+One of the other programmers had made a jellyfish looking ribbon visual effect
+<br/> 
+but we weren't sure what to do with it. So i decided to take it upon myself 
+<br/> 
+to make an enemy out of it.
+<br/> 
+
+
+|The straight forward approach|       |
+|------|------|
+|To begin with i simply wanted to try to make the jellyfish just follow you so that when it gets too close the player takes damage much like many other enemies in games. |<img src="Images/Eel.gif" width="600"/>|
+|Adding electricity|       | 
+|The flaw with the previous method was that in a dark open sky it started getting quite hard to see where the enemies are and how close they actually were. To try to make them more visible i decided to add lightning around the jellyfish.| <img src="Images/ElectricEel.gif" width="600"/><br/>  |       |
+|Changing it up|       | 
+|Although the lightning did help it still didn't feel like it fit into the game we were trying to make and the play testers agreed. To combat this, instead of making a sort of approaching enemy, i decided to recycle the jellyfish into more of a immovable obstacle instead. Now they move in a pattern with lightning between each other making different type of shapes depending on how i structure the paths. I also added so that they spin faster the closer you get.|<img src="Images/Jellyfish.gif" width="600"/><br/>|
 
 
 
-Links to Whale blueprints:
-[WhaleParent](https://blueprintue.com/blueprint/wnxxdpmd/)
-[WhaleShark](https://blueprintue.com/blueprint/rpadtoge/)
-[BlowholeWhale](https://blueprintue.com/blueprint/ux194k_4/)
+Links to relevant blueprints:
+[Jellyfish_01](https://blueprintue.com/blueprint/a53mtjgq/)
+[JellyfishElectricity](https://blueprintue.com/blueprint/wv68_grw/)
+[Jellyfish_02](https://blueprintue.com/blueprint/e8uqgz5r/)
