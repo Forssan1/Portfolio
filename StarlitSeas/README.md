@@ -1,115 +1,92 @@
 # Starlit Seas
-<img src="Images/StarlitSeas1.png" width = 800 />
+<img src="Images/StarlitSeas1.png" width="800" />
 
- [Itch.io](https://yrgo-game-creator.itch.io/starlit-seas)
-
-<br/>
-
-## Game description
-Starlit Seas is a atmospheric 3D platformer where you play as a lost soul finding their way up to heaven with the guidance of whale spirits.
+[Itch.io](https://yrgo-game-creator.itch.io/starlit-seas)
 
 <br/>
 
-# My contributions during development
+## Game Description
+Starlit Seas is an atmospheric 3D platformer where you play as a lost soul finding their way to heaven with the guidance of whale spirits.
 
-## The whales path
-The whales ended up being the most complicated part for me.
-<br/> 
-The idea is simple. A simple "AI" that moves along a route 
-<br/> 
-but can still move around said routes to make it feel natural.
-<br/> 
+<br/>
 
+# My Contributions During Development
 
-|The initial idea|       |
-|------|------|
-|At the beginning the initial thought was the Unreal Engines built in AI!<br/>There was a problem with this. The AI required a nav mesh that only registers the potential path on solid ground. <br/><br/>I didn't manage to find any previous example of the built in Ai in the air either. <br/> Having a invisible ground instead didn't give the flexibilty that i wanted either.|<img src="Images/AI.gif" width="600"/><br/> (i didn't have the correct whale model yet)|
-|An alternative|       | 
-|Instead of using actual AI, i decided to use splines to have more control over the whales.<br/> To make it more natural feeling i decided to make a system so that the whales could switch between different<br/> splines/routes seamlessly. Although i tried my best and got it to work 95% of times, there were enough bugs, <br/> too many tasks left and barely any time to complete it.<br/>| <img src="Images/Transfer1.png" width="600"/><br/>  <img src="Images/Transfer2.png" width="600"/><br/>(first version of this system)|
-|The final method|       |
-|In the end i decided to just keep the whales on splines without anything extra added. <br/> There were many more smaller ideas i tried to implement but none added anything substantial. <br/> While this is disappointing of course, there wasn't enough time.|<img src="Images/splines.gif" width="600"/><br/>(The whales following a splines)<img src="Images/versions.png" width="600"/><br/>(the amount of different versions of whales)|
+## The Whales' Path
+The whales ended up being the most complicated part for me.  
+The idea was simple: create a basic "AI" that moves along a route but can still move around the route to feel more natural.
+
+| The Initial Idea | |
+|---|---|
+| At first, I considered using Unreal Engine's built-in AI! However, there was a problem with this approach. The AI required a nav mesh that only registers potential paths on solid ground. <br/><br/> I couldn't find any previous examples of using the built-in AI in the air either. Having an invisible ground didn't provide the flexibility I wanted, so this approach was quickly ruled out. | <img src="Images/AI.gif" width="600"/><br/>(I didn't have the correct whale model yet) |
+
+| An Alternative | |
+|---|---|
+| Instead of using actual AI, I decided to use splines to have more control over the whales. To make it feel more natural, I created a system that allowed the whales to switch between different splines/routes seamlessly. Although I tried my best and got it to work 95% of the time, there were enough bugs, too many tasks left, and barely any time to complete it. | <img src="Images/Transfer1.png" width="600"/><br/><img src="Images/Transfer2.png" width="5000"/><br/>(First version of this system) |
+
+| The Final Method | |
+|---|---|
+| In the end, I decided to keep the whales on splines without any additional features. While this was disappointing, there wasn't enough time to implement more ideas. | <img src="Images/splines.gif" width="600"/><br/>(The whales following a spline)<br/><img src="Images/versions.png" width="600"/><br/>(Different versions of the whales) |
 
 <details>
+<summary>List of Smaller Tasks I Completed for the Whales</summary>
 
-<summary>List of smaller things i did on the whales</summary>
-
-1. The blowhole boost that sprays water that also launches the player
-
-2. Animation retargeting
-
-3. Lots of collision troubleshooting
-
+1. The blowhole boost that sprays water and launches the player.
+2. Animation retargeting.
+3. Troubleshooting various collision issues.
 
 </details>
 
-Links to Whale blueprints:
-[WhaleParent](https://blueprintue.com/blueprint/wnxxdpmd/)
-[WhaleShark](https://blueprintue.com/blueprint/rpadtoge/)
+Links to Whale Blueprints:  
+[WhaleParent](https://blueprintue.com/blueprint/wnxxdpmd/)  
+[WhaleShark](https://blueprintue.com/blueprint/rpadtoge/)  
 [BlowholeWhale](https://blueprintue.com/blueprint/ux194k_4/)
 
+## The Intro Cinematic
+Due to the high pressure on the artists, I decided to take on the task of creating the intro cinematic myself and experiment with CineCam in Unreal Engine. Although I'm somewhat happy with the result, it's not perfect, and I didn't have time to improve it further.
 
-## 
+| Where to Begin? | |
+|---|---|
+| I wanted to create a first-person POV with realistic movement. Instead of animating every frame by hand, I used an app called CamTrackAR.<br/><br/> This app allowed me to track my phone's movement by placing anchor points on the ground while filming, resulting in somewhat natural head movement. | <img src="Images/CamTrack.png" width="600"/> |
 
+| The Animation | |
+|---|---|
+| For the animation where the player's hands appear as they wake up in a foreign place, I used a Mixamo animation. However, the skeletal mesh I received from the artist wasn't compatible, so I had to retarget the player's skeletal mesh to the Mixamo skeletal mesh. | <img src="Images/Cinematic1.gif" width="500"/> |
 
+| Blinking | |
+|---|---|
+| I also wanted to add some blinking effects to make it feel like the player had just woken up. I created a material that looks like eyelids around the camera and applied it to a post-process component attached to the skeletal mesh. Finally, I added a variable that could be adjusted to control the sphere mask, simulating the eyelids closing and opening. | <img src="Images/Blinking.gif" width="600"/> |
 
+| The Final Product | |
+|---|---|
+| Finally, I put it all together, and it looks like this:<br/><br/>It's a bit longer and better looking in the actual game. | <img src="Images/Cinematic2.gif" width="600"/> |
 
-## The Intro cinematic
-Due to high pressure that was on the artist already i decided
-<br/> 
-to take the task upon myself and experiment with the cinecam in UE.
-<br/> 
-Although i'm somewhat happy with the result, it's not perfect and i
-<br/> 
-didn't have time to make it much better
-<br/> 
-
-
-|Where to begin?|       |
-|------|------|
-|I wanted to make the first person POV have realistic movement.<br/>And instead of animating every frame by hand, i found this app called CamTrackAR<br/><br/> This app made it so that i could track the movement of my phone by placing anchor points along the ground when filming leading to somewhat natural head movement. |<img src="Images/CamTrack.png" width="600"/>|
-|The Animation|       | 
-|As for the animation where i wanted the hands to show as the player wakes up in a foreign place, i took a mixamo animation. The Skeletal mesh i got from the artist wasn't compatible though so i had to retarget the player SM to the mixamo SM.| <img src="Images/Cinematic1.gif" width="500"/><br/>  |       |
-|Blinking|       | 
-|I also wanted to add some blinking so that it really feels like you've just woken up. I made a material that looks like the eyelids around the camera and applied it to a post process component that was attached to the skeletal mesh. Finally i added a variable that i could change wherever that changed the sphere mask making it seem as if the eyelids closed and opened.|<img src="Images/Blinking.gif" width="600"/><br/>|
-|The Final Product|       | 
-|Finally i put it all together and it looks like this: <br/> <br/>It's a bit longer and better looking in the actual game.|<img src="Images/Cinematic2.gif" width="600"/><br/>|
-
-Links to relevant blueprints:
-[BlinkingMaterial](https://blueprintue.com/blueprint/c5bvtwnn/)
+Links to Relevant Blueprints:  
+[BlinkingMaterial](https://blueprintue.com/blueprint/c5bvtwnn/)  
 [BlinkingBlueprint](https://blueprintue.com/blueprint/33l218--/)
 
-##
-
-
 ## Jellyfish Enemies
-During development we realised that some type of obstacle is needed.
-<br/> 
-One of the other programmers had made a jellyfish looking ribbon visual effect
-<br/> 
-but we weren't sure what to do with it. So i decided to take it upon myself 
-<br/> 
-to make an enemy out of it.
-<br/> 
+During development, we realized that some type of obstacle was needed. One of the other programmers had created a jellyfish-like ribbon visual effect, but we weren't sure what to do with it. So I decided to turn it into an enemy.
 
+| The Straightforward Approach | |
+|---|---|
+| To start, I made the jellyfish follow the player, so that when it got too close, the player would take damage—much like many other enemies in games. | <img src="Images/Eel.gif" width="600"/> |
 
-|The straight forward approach|       |
-|------|------|
-|To begin with i simply wanted to try to make the jellyfish just follow you so that when it gets too close the player takes damage much like many other enemies in games. |<img src="Images/Eel.gif" width="600"/>|
-|Adding electricity|       | 
-|The flaw with the previous method was that in a dark open sky it started getting quite hard to see where the enemies are and how close they actually were. To try to make them more visible i decided to add lightning around the jellyfish.| <img src="Images/ElectricEel.gif" width="600"/><br/>  |       |
-|Changing it up|       | 
-|Although the lightning did help it still didn't feel like it fit into the game we were trying to make and the play testers agreed. To combat this, instead of making a sort of approaching enemy, i decided to recycle the jellyfish into more of a immovable obstacle instead. Now they move in a pattern with lightning between each other making different type of shapes depending on how i structure the paths. I also added so that they spin faster the closer you get.|<img src="Images/Jellyfish.gif" width="600"/><br/>|
+| Adding Electricity | |
+|---|---|
+| The flaw with the previous approach was that in a dark, open sky, it became hard to see where the enemies were and how close they were. To make them more visible, I added lightning effects around the jellyfish. | <img src="Images/ElectricEel.gif" width="600"/> |
 
+| Changing It Up | |
+|---|---|
+| Although the lightning helped, it still didn't fit the game we were trying to make, and the playtesters agreed. To address this, I repurposed the jellyfish into more of an immovable obstacle. Now, they move in a pattern with lightning between each other, creating different shapes depending on how the paths are structured. I also made them spin faster as the player gets closer. | <img src="Images/Jellyfish.gif" width="600"/> |
 
-
-Links to relevant blueprints:
-[Jellyfish_01](https://blueprintue.com/blueprint/a53mtjgq/)
-[JellyfishElectricity](https://blueprintue.com/blueprint/wv68_grw/)
+Links to Relevant Blueprints:  
+[Jellyfish_01](https://blueprintue.com/blueprint/a53mtjgq/)  
+[JellyfishElectricity](https://blueprintue.com/blueprint/wv68_grw/)  
 [Jellyfish_02](https://blueprintue.com/blueprint/e8uqgz5r/)
 
-##
+## List of Smaller Things I Did
 
-## List of smaller things i did
 <details>
 <summary>Boost Ring</summary>
 <img src="Images/BoostRing.gif" width="600"/><br/>
@@ -122,12 +99,11 @@ Links to relevant blueprints:
 
 <details>
 <summary>Scanning</summary>
-<img src="Images/Scanning.gif" width="600"/><br/> As a fun little end credits joke i suggested to the group to scan <br/> everyone in dumb poses and put ourselves inside the game using polycam <br/> (I'm the one by the computer)
+<img src="Images/Scanning.gif" width="600"/><br/> As a fun little end credits joke, I suggested to the group that we scan everyone in silly poses and put ourselves inside the game using Polycam.<br/> (I'm the one by the computer)
 </details>
 
 <details>
-<summary>Omptimization</summary>
-
-due to lack of perfomance i tried to optimize as much as possible with<br/>foliage reduction, culling, LOD, nanite and so on.
+<summary>Optimization</summary>
+Due to performance issues, I tried to optimize as much as possible by reducing foliage, adjusting culling, tweaking LOD, using Nanite, and so on.
 </details>
 
