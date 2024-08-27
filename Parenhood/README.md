@@ -21,6 +21,9 @@ So there were many challenges with making the movement of the child that will fo
 |---|---|
 |In the beginning, it was expected that the child can move properly and expect help from you, the parent, just like in the sketch made by Axel Björkman. <br/><br/> Some of the obstacles are:<br/> Jump up on ledge with help from parent. <br/> Stop at crushers giving the parent a chance to save the child. <br/> And child running away through a passage giving the parent a limited time to complete a task.| <img src="Images/ParenthoodSketch.png" width="800"/><br/> |
 
+<br/>
+<br/>
+
 ### The Ledges:
 |||
 |---|---|
@@ -164,82 +167,179 @@ So there were many challenges with making the movement of the child that will fo
 ```
 </details>
 
+<br/>
+<br/>
+
 ### Assisted Jumps:
 |Same as before||
 |---|---|
-|Similiar to the steps like before, there was another step for the child where it was too high for it to reach. For the child to make it over, the child needed help from the player/parent. <br/><br/> Before this task, we were taugh what DOTween was which help immensely with the solution. For this task i decided to check if the parent was next to the wall and then getting the top position of the parents collider. With that i made the child "jump" from it's original position to the top of the parent and after that using a bit of AddForce to make it completely over the ledge. | <img src="Images/LedgeJump2.gif" width="800">|
+|Similiar to the steps like before, there was another step for the child where it was too high for it to reach. For the child to make it over, the child needed help from the player/parent. <br/><br/> Before this task, we were taugh what DOTween was which help immensely with the solution. For this task i decided to check if the parent was next to the wall and then getting the top position of the parents collider. With that i made the child "jump" from it's original position to the top of the parent and after that using a bit of AddForce to make it completely over the ledge. | <img src="Images/LedgeJump2.gif" width="400">|
+
+<details>
+<summary>AssistedJumpScript</summary>
+
+```C# 
+    private Rigidbody2D rb;
+    private MotherMovement motherMovement;
+    private ChildJumpOverSmall childJumpOverSmall;
+    private Follow follow;
+    private SpriteRenderer sprite;
+    RaycastHit2D hitInfo;
+
+    [SerializeField] private LayerMask parentLayer;
+
+    private float maxRaycastDistance = 9f;
+    private float jumpDistanceThreshold = 0.2f;
+    
+
+    Vector2 topCenter;
+    private bool hasTestBeenCalled = false;
+    private float distance;
+    private float originalStoppingDistance;
 
 
+    void Start()
+    {
+        follow = GetComponent<Follow>();
+        motherMovement = FindAnyObjectByType<MotherMovement>();
+        rb = GetComponent<Rigidbody2D>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
+        childJumpOverSmall = GetComponent<ChildJumpOverSmall>();
+        originalStoppingDistance = follow.stoppingDistance;
+    }
 
+    void Update()
+    {
+        RayCast();
 
+        if (motherMovement.wallCheck)
+        {
+            follow.canJump = false;
+            follow.movingLeft = false;
+            follow.movingRight = false;
+            if (motherMovement.IsGrounded() && !hasTestBeenCalled)
+            {
+                follow.stoppingDistance = 0f;
+                follow.isFollowing = true;
+                if (distance < jumpDistanceThreshold && follow.isGrounded)
+                {
+                    JumpOnParent();
+                    follow.isFollowing = false;
+                    hasTestBeenCalled = true;
+                }
+            }
+        }
+        else if (childJumpOverSmall.smallStepRay == false)
+        {
+            follow.canJump = true;
+        }
 
+        if (!motherMovement.wallCheck && hasTestBeenCalled)
+        {
+            Kill();
+            hasTestBeenCalled = false;
+            follow.isFollowing = false;
+        }
 
+    }
 
+    private void RayCast()
+    {
+        hitInfo = Physics2D.Raycast(transform.position, new Vector2((sprite.flipX ? -1f : 1f), 0), maxRaycastDistance, parentLayer);
+        var parentCollider = hitInfo.collider;
+        distance = Mathf.Abs(hitInfo.point.x - transform.position.x);
+        if (parentCollider != null)
+        {
+            topCenter = new Vector2(parentCollider.bounds.center.x, parentCollider.bounds.max.y);
+        }
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
 
+        if (collision.gameObject.layer == 11)
+        {
+            follow.isFollowing = false;
+            follow.stoppingDistance = originalStoppingDistance;
+            if (transform.position.y > follow.target.position.y && motherMovement.wallCheck)
+            {
+                CancelInvoke("Timer");
+                hasTestBeenCalled = true;
+                Invoke("Timer", 2);
+                Kill();
+                rb.velocity = Vector2.zero;
+                float jumpForceX = sprite.flipX ? -0.5f : 0.5f;
+                rb.AddForce(new Vector2(jumpForceX, 4f), ForceMode2D.Impulse);
+            }
+        }
+    }
 
-## The Intro Cinematic
-Due to the high pressure on the artists, I decided to take on the task of creating the intro cinematic myself and experiment with CineCam in Unreal Engine. Although I'm somewhat happy with the result, it's not perfect, and I didn't have time to improve it further.
+    private void JumpOnParent()
+    {
+        rb.velocity = Vector2.zero;
+        transform.DOJump(topCenter, 0.3f, 1, 1).OnComplete(Kill);
 
-| Where to Begin? | |
+    }
+
+    private void Timer()
+    {
+        hasTestBeenCalled = false;
+    }
+    private void OnDisable()
+    {
+        Kill();
+    }
+
+    private void Kill()
+    {
+        transform.DOKill();
+    }
+
+```
+</details>
+
+<br/>
+<br/>
+
+### Crushers:
+
+|sub-title||
 |---|---|
-| I wanted to create a first-person POV with realistic movement. Instead of animating every frame by hand, I used an app called CamTrackAR.<br/><br/> This app allowed me to track my phone's movement by placing anchor points on the ground while filming, resulting in somewhat natural head movement. | <img src="Images/CamTrack.png" width="600"/> |
+|description | <img src="Images/.gif" width="400">|
 
-| The Animation | |
-|---|---|
-| For the animation where the player's hands appear as they wake up in a foreign place, I used a Mixamo animation. However, the skeletal mesh I received from the artist wasn't compatible, so I had to retarget the player's skeletal mesh to the Mixamo skeletal mesh. | <img src="Images/Cinematic1.gif" width="500"/> |
 
-| Blinking | |
-|---|---|
-| I also wanted to add some blinking effects to make it feel like the player had just woken up. I created a material that looks like eyelids around the camera and applied it to a post-process component attached to the skeletal mesh. Finally, I added a variable that could be adjusted to control the sphere mask, simulating the eyelids closing and opening. | <img src="Images/Blinking.gif" width="600"/> |
+## "Lonely" Shader
+Description
 
-| The Final Product | |
-|---|---|
-| Finally, I put it all together, and it looks like this:<br/><br/>It's a bit longer and better looking in the actual game. | <img src="Images/Cinematic2.gif" width="600"/> |
+## Cinematic Bars and transition
+Description
 
-Links to Relevant Blueprints:  
-[BlinkingMaterial](https://blueprintue.com/blueprint/c5bvtwnn/)  
-[BlinkingBlueprint](https://blueprintue.com/blueprint/33l218--/)
 
-## Jellyfish Enemies
-During development, we realized that some type of obstacle was needed. One of the other programmers had created a jellyfish-like ribbon visual effect, but we weren't sure what to do with it. So I decided to turn it into an enemy.
 
-| The Straightforward Approach | |
-|---|---|
-| To start, I made the jellyfish follow the player, so that when it got too close, the player would take damage—much like many other enemies in games. | <img src="Images/Eel.gif" width="600"/> |
 
-| Adding Electricity | |
-|---|---|
-| The flaw with the previous approach was that in a dark, open sky, it became hard to see where the enemies were and how close they were. To make them more visible, I added lightning effects around the jellyfish. | <img src="Images/ElectricEel.gif" width="600"/> |
 
-| Changing It Up | |
-|---|---|
-| Although the lightning helped, it still didn't fit the game we were trying to make, and the playtesters agreed. To address this, I repurposed the jellyfish into more of an immovable obstacle. Now, they move in a pattern with lightning between each other, creating different shapes depending on how the paths are structured. I also made them spin faster as the player gets closer. | <img src="Images/Jellyfish.gif" width="600"/> |
 
-Links to Relevant Blueprints:  
-[Jellyfish_01](https://blueprintue.com/blueprint/a53mtjgq/)  
-[JellyfishElectricity](https://blueprintue.com/blueprint/wv68_grw/)  
-[Jellyfish_02](https://blueprintue.com/blueprint/e8uqgz5r/)
+
 
 ## List of Smaller Things I Did
 
 <details>
-<summary>Boost Ring</summary>
+<summary>1</summary>
 <img src="Images/BoostRing.gif" width="600"/><br/>
 </details>
 
 <details>
-<summary>Fog</summary>
+<summary>2</summary>
 <img src="Images/Fog.gif" width="600"/><br/>
 </details>
 
 <details>
-<summary>Scanning</summary>
-<img src="Images/Scanning.gif" width="600"/><br/> As a fun little end credits joke, I suggested to the group that we scan everyone in silly poses and put ourselves inside the game using Polycam.<br/> (I'm the one by the computer)
+<summary>3</summary>
+<img src="Images/Scanning.gif" width="600"/><br/>Description
 </details>
 
 <details>
-<summary>Optimization</summary>
-Due to performance issues, I tried to optimize as much as possible by reducing foliage, adjusting culling, tweaking LOD, using Nanite, and so on.
+<summary>4</summary>
+Description
 </details>
 
