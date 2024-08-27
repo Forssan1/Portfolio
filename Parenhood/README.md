@@ -1,5 +1,5 @@
 # Parenthood
-<img src="Images/StarlitSeas1.png" width="800" />
+<img src="Images/Logo.png" width="800" />
 
 [Itch.io](https://yrgo-game-creator.itch.io/parenthood)
 
@@ -14,35 +14,169 @@ I'm not very proud of the level of programming that i did in this game. However,
 
 # My Contributions During Development
 
-## 
-The whales ended up being the most complicated part for me.  
-The idea was simple: create a basic "AI" that moves along a route but can still move around the route to feel more natural.
+## The child
+So there were many challenges with making the movement of the child that will follow you while still acting like a child. With the obstacles there is also a need for situational behaviour depending on which obstacle was ahead. As the first proper project, this ended up being quite challenging.
 
-| T | |
+| A sketch of obstacles | |
 |---|---|
-| At first, I considered using Unreal Engine's built-in AI! However, there was a problem with this approach. The AI required a nav mesh that only registers potential paths on solid ground. <br/><br/> I couldn't find any previous examples of using the built-in AI in the air either. Having an invisible ground didn't provide the flexibility I wanted, so this approach was quickly ruled out. | <img src="Images/AI.gif" width="600"/><br/>(I didn't have the correct whale model yet) |
+|In the beginning, it was expected that the child can move properly and expect help from you, the parent, just like in the sketch made by Axel Björkman. <br/><br/> Some of the obstacles are:<br/> Jump up on ledge with help from parent. <br/> Stop at crushers giving the parent a chance to save the child. <br/> And child running away through a passage giving the parent a limited time to complete a task.| <img src="Images/ParenthoodSketch.png" width="800"/><br/> |
 
-| An Alternative | |
+### The Ledges:
+|||
 |---|---|
-| Instead of using actual AI, I decided to use splines to have more control over the whales. To make it feel more natural, I created a system that allowed the whales to switch between different splines/routes seamlessly. Although I tried my best and got it to work 95% of the time, there were enough bugs, too many tasks left, and barely any time to complete it. | <img src="Images/Transfer1.png" width="600"/><br/><img src="Images/Transfer2.png" width="600"/><br/>(First version of this system) |
+| As quite newbie to coding the first idea that came to mind was to use RayCast to decide if the child was close enough to the step and after that use AddForce to make the child leap upwards over and over so that eventually the child clears the stairs. <br/> This of course is very flawed in many ways. The steps in every map varied in size making it difficult to predict the amount of force needed. It also could make the child stuck if it lands too far into each step.| |
 
-| The Final Method | |
+| Simpler but better | |
 |---|---|
-| In the end, I decided to keep the whales on splines without any additional features. While this was disappointing, there wasn't enough time to implement more ideas. | <img src="Images/splines.gif" width="600"/><br/>(The whales following a spline)<br/><img src="Images/versions.png" width="600"/><br/>(Different versions of the whales) |
-
+| There were some more versions before this but in the end i decided that simpler was better and laid out points for each landing per each step. There were some minor things that needed fixing aswell. For example, the childs random jumping needed to be stopped before the approach of the steps. | <img src="Images/LedgeJump.gif" width="400"/><br/>|
 <details>
-<summary>List of Smaller Tasks I Completed for the Whales</summary>
+<summary>LedgeJumpScript</summary>
 
-1. The blowhole boost that sprays water and launches the player.
-2. Animation retargeting.
-3. Troubleshooting various collision issues.
+```C# 
+    private Follow follow;
+    private SquishAndStretch squishAndStretch;
+    private SpriteRenderer sprite;
+    private RaycastHit2D stepRay;
 
+    private int jumpIndex = 0;
+    private List<Vector3> childrenPositions = new List<Vector3>();
+
+    [SerializeField] private LayerMask childJumpStepLayer;
+
+    private float maxRaycastDistance = 4f;
+    private float jumpDistanceThreshold = 0.3f;
+
+    float stepDistance;
+    private bool isJumpInProgress = false;
+    public bool smallStepRay = false;
+
+    void Start()
+    {
+
+        squishAndStretch = GetComponent<SquishAndStretch>();
+        follow = GetComponent<Follow>();
+        sprite = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    void Update()
+    {
+        RayCast();
+
+        if (stepRay.collider != null)
+        {
+            smallStepRay = true;
+            follow.canJump = false;
+            StartCoroutine(StartProcessCoroutine());
+        }
+        else
+        {
+            smallStepRay = false;
+        }
+    }
+
+    private IEnumerator StartProcessCoroutine()
+    {
+        yield return new WaitForEndOfFrame(); 
+        follow.canJump = false;
+        if (!isJumpInProgress)  
+        {
+            InitiateJump();
+        }
+    }
+
+    private void RayCast()
+    {
+        stepRay = Physics2D.Raycast(transform.position, Vector2.right * (sprite.flipX ? -1f : 1f), maxRaycastDistance, childJumpStepLayer);
+        stepDistance = Mathf.Abs(stepRay.point.x - transform.position.x);
+
+        if (stepRay.collider != null)
+        {
+            Transform parentTransform = stepRay.collider.transform;
+            childrenPositions.Clear();
+
+            foreach (Transform childTransform in parentTransform)
+            {
+                Vector3 childPosition = childTransform.position;
+                childrenPositions.Add(childPosition);
+            }
+        }
+    }
+
+
+    private void InitiateJump()
+    {
+        if (jumpIndex < childrenPositions.Count)
+        {
+            if (stepDistance < jumpDistanceThreshold && follow.isGrounded)
+            {
+                Sequence sequence = DOTween.Sequence();
+                isJumpInProgress = true; 
+                for (int i = 0; i <= childrenPositions.Count; i++)
+                {
+                    squishAndStretch.enabled = false;
+                    sequence.Append(transform.DOJump(childrenPositions[i], 0.15f, 1, 0.4f));
+                    jumpIndex++;
+                    if (jumpIndex >= childrenPositions.Count)
+                    {
+                        squishAndStretch.enabled = true;
+                        Kill();
+                        childrenPositions.Clear();
+                        isJumpInProgress = false;
+                        jumpIndex = 0;
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            isJumpInProgress = false;
+        }
+    }
+
+
+    private void OnDisable()
+    {
+        Kill();
+    }
+
+    private void Kill()
+    {
+        if (squishAndStretch != null)
+        {
+            squishAndStretch.enabled = true;
+        }
+        transform.DOKill();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 11 && isJumpInProgress)
+        {
+            StopCoroutine(StartProcessCoroutine());
+            Kill();
+            childrenPositions.Clear();
+            isJumpInProgress = false;
+            jumpIndex = 0;
+        }
+    }
+
+```
 </details>
 
-Links to Whale Blueprints:  
-[WhaleParent](https://blueprintue.com/blueprint/wnxxdpmd/)  
-[WhaleShark](https://blueprintue.com/blueprint/rpadtoge/)  
-[BlowholeWhale](https://blueprintue.com/blueprint/ux194k_4/)
+### Assisted Jumps:
+|Same as before||
+|---|---|
+|Similiar to the steps like before, there was another step for the child where it was too high for it to reach. For the child to make it over, the child needed help from the player/parent. <br/><br/> Before this task, we were taugh what DOTween was which help immensely with the solution. For this task i decided to check if the parent was next to the wall and then getting the top position of the parents collider. With that i made the child "jump" from it's original position to the top of the parent and after that using a bit of AddForce to make it completely over the ledge. | <img src="Images/LedgeJump2.gif" width="800">|
+
+
+
+
+
+
+
+
+
 
 ## The Intro Cinematic
 Due to the high pressure on the artists, I decided to take on the task of creating the intro cinematic myself and experiment with CineCam in Unreal Engine. Although I'm somewhat happy with the result, it's not perfect, and I didn't have time to improve it further.
