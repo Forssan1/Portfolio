@@ -31,7 +31,7 @@ So there were many challenges with making the movement of the child that will fo
 
 | Simpler but better | |
 |---|---|
-| There were some more versions before this but in the end i decided that simpler was better and laid out points for each landing per each step. There were some minor things that needed fixing aswell. For example, the childs random jumping needed to be stopped before the approach of the steps. | <img src="Images/LedgeJump.gif" width="400"/><br/>|
+| There were some more versions before this but in the end i decided that simpler was better and laid out points for each landing per each step. There were some minor things that needed fixing aswell. For example, the childs random jumping needed to be stopped before the approach of the steps. | <img src="Images/LedgeJump.gif" width="500"/><br/>|
 <details>
 <summary>LedgeJumpScript</summary>
 
@@ -173,7 +173,7 @@ So there were many challenges with making the movement of the child that will fo
 ### Assisted Jumps:
 |Same as before||
 |---|---|
-|Similiar to the steps like before, there was another step for the child where it was too high for it to reach. For the child to make it over, the child needed help from the player/parent. <br/><br/> Before this task, we were taugh what DOTween was which help immensely with the solution. For this task i decided to check if the parent was next to the wall and then getting the top position of the parents collider. With that i made the child "jump" from it's original position to the top of the parent and after that using a bit of AddForce to make it completely over the ledge. | <img src="Images/LedgeJump2.gif" width="400">|
+|Similiar to the steps like before, there was another step for the child where it was too high for it to reach. For the child to make it over, the child needed help from the player/parent. <br/><br/> Before this task, we were taugh what DOTween was which help immensely with the solution. For this task i decided to check if the parent was next to the wall and then getting the top position of the parents collider. With that i made the child "jump" from it's original position to the top of the parent and after that using a bit of AddForce to make it completely over the ledge. | <img src="Images/LedgeJump2.gif" width="500">|
 
 <details>
 <summary>AssistedJumpScript</summary>
@@ -303,11 +303,98 @@ So there were many challenges with making the movement of the child that will fo
 
 ### Crushers:
 
-|sub-title||
+|Protecting the child||
 |---|---|
-|description | <img src="Images/.gif" width="400">|
+|We also wanted a obstacle that was dangerous instead of a simple step that the child can't jump over. Instead of adding something brutal like blades a simple crusher like in mario seemed like a good option. It was quite tricky to make it feel satisfying to save the child but i'm glad with the result.  | <img src="Images/Crusher.gif" width="500">|
+
+<details/>
+<summary>CrusherScript</summary>
+
+```C#
+    private Rigidbody2D rb;
+    public GameObject pointA;
+    public GameObject pointB;
+    private bool isGoingUp = false;
+    private bool canHurtChild = false;
+    private bool hitPlayer = false;
+
+    private CheckpointManager checkpointManager;    
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        checkpointManager = FindObjectOfType<CheckpointManager>();
+    }
+
+    private void Update()
+    {
+        if (isGoingUp)
+        {
+            canHurtChild = false;
+            MoveUpToPointA();
+        }
+        else if (!isGoingUp && !hitPlayer)
+        {
+            canHurtChild = true;
+            MoveUpToPointB();
+            
+        }
+        
+    }
+
+    private void MoveUpToPointA()
+    {
+        Vector2 direction = (pointA.transform.position - transform.position).normalized;
+        rb.velocity = new Vector2(rb.velocity.x, direction.y * 2);
+
+        if (transform.position.y >= pointA.transform.position.y - 0.2f)
+        {
+            rb.velocity = Vector2.zero;
+            isGoingUp = false;
+        }
+    }
+
+    private void MoveUpToPointB()
+    {
+        
+        Vector2 direction = (pointB.transform.position - transform.position).normalized;
+        rb.velocity = new Vector2(rb.velocity.x, direction.y * 50);
+        
+        if (transform.position.y <= pointB.transform.position.y)
+        {
+
+            StartCoroutine(WaitAndMoveUp());
+        }
+    }
+
+    private IEnumerator WaitAndMoveUp()
+    {
+        canHurtChild = false;
+        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(2);
+        hitPlayer = false;
+        isGoingUp = true;
+    }
 
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        
+        if (collision.gameObject.CompareTag("child") && canHurtChild)
+        {
+            checkpointManager.LoadCheckpoint();
+            CinemachineShake.Instance.ShakeCamera(1f, 0.5f);
+      
+        }
+        if (collision.gameObject.CompareTag("Player") && canHurtChild)
+        {
+            hitPlayer = true;
+            StartCoroutine(WaitAndMoveUp());
+            CinemachineShake.Instance.ShakeCamera(1f, 0.5f);
+        }
+    }
+```
+<details/>
+    
 ## "Lonely" Shader
 Description
 
