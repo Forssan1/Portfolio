@@ -307,7 +307,7 @@ So there were many challenges with making the movement of the child that will fo
 |---|---|
 |We also wanted a obstacle that was dangerous instead of a simple step that the child can't jump over. Instead of adding something brutal like blades a simple crusher like in mario seemed like a good option. It was quite tricky to make it feel satisfying to save the child but i'm glad with the result.  | <img src="Images/Crusher.gif" width="500">|
 
-<details/>
+<details>
 <summary>CrusherScript</summary>
 
 ```C#
@@ -393,10 +393,21 @@ So there were many challenges with making the movement of the child that will fo
         }
     }
 ```
-<details/>
-    
+</details>
+
+## 
+
 ## "Lonely" Shader
-Description
+Due to there being some of play testers simply leaving the child and going ahead alone i decided to add something to discourage such actions. Since it was the early days of my game development journey i thought it would be fun to try out some shaders for the first time.
+
+|First time using shaders||
+|---|---|
+|Although this shader isn't Shadertoy.com level it was enough to give the message to the player that they should go back. <br/><br/>  It calculates the position of the pixels from the origin and with a variable i increase or decrease the size of the mask i apply. A simple circle is a bit boring so i add some noise with a time node connected to the scale of the noise creating some variation. | <img src="Images/Lonely.gif" width="500">|
+
+<details>
+<summary>Shader Graph</summary>
+<img src="Images/Shader.png" width="500">
+</details>
 
 ## Cinematic Bars and transition
 Description
