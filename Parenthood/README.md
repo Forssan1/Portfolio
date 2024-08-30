@@ -410,7 +410,153 @@ Due to there being some of play testers simply leaving the child and going ahead
 </details>
 
 ## Cinematic Bars and transition
-Description
+Something smaller i did was the transitions between the cinematic and actual gameplay. I also did the letterboxing for each cutscene making it easier to see when a cinematic actually starts.
+
+
+|||
+|---|---|
+|This one was quite simple. I created two 2D blocks and simply moved them up or down in an animation depending on if the cinematic started or ended. <br/> <br/> As for the transition from cinematic to gameplay, i had two different gameobjects for each charachter, two for the child and two for the parent. Right before the cutscene ended i made sure the "real" parent and child was in the position of the cutscene parent and child and then seemlessly switched active state of the two and the cameras. | <img src="Images/Transition.gif" width="500"> <br/> (The cinematic parent and child is not in the gif due to time restraint.)|
+
+<details>
+<summary>CinematicBarsController</summary>
+
+```C#
+    public static CinematicBarsController Instance { get; private set; }
+    private GameObject cinematicBarContainerGO;
+    private Animator animator;
+
+    public void Start()
+    {
+        GameObject[] foundObjects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "CinematicBarsContainer").ToArray();
+
+        if (foundObjects.Length > 0)
+        {
+            cinematicBarContainerGO = foundObjects[0];
+        }
+        animator = cinematicBarContainerGO.GetComponent<Animator>();
+
+
+    }
+    public void ShowBars()
+    {
+ 
+        cinematicBarContainerGO.SetActive(true);
+        
+
+    }
+
+    public void HideBars()
+    {
+        if (cinematicBarContainerGO.activeSelf)
+        {
+            StartCoroutine("HideBarsAndDisable");
+        }
+    }
+
+    private IEnumerator HideBarsAndDisable()
+    {
+        animator.SetTrigger("HideCinematicBars");
+        yield return new WaitForSeconds(3);
+        cinematicBarContainerGO.SetActive(false);
+    }
+```
+</details>
+
+<details>
+<summary>IntroScript (Methods activated in animation, not proud of this one.)</summary>
+
+```C#
+  public GameObject child;
+  public GameObject parent;
+  public GameObject cutSceneChild;
+  public GameObject cutSceneParent;
+  public CinemachineVirtualCamera introVirtualCamera;
+  private Follow follow;
+  private MotherMovement motherMovement;
+  public SceneHandler sceneHandler;
+  void Start()
+  {
+      sceneHandler = FindAnyObjectByType<SceneHandler>();
+      if (follow == null)
+          follow = FindObjectOfType<Follow>();
+
+      if (motherMovement == null)
+          motherMovement = FindObjectOfType<MotherMovement>();
+  }
+
+
+  public void ChildMoveRight()
+  { follow.movingRight = true; }
+  public void DecreaseCameraPriority()
+  { introVirtualCamera.Priority = 0; }
+  public void IncreaseCameraPriority()
+  { introVirtualCamera.Priority = 21; }
+  public void MoveParent()
+  { parent.transform.position = cutSceneParent.transform.position; }
+  public void MoveChild()
+  { child.transform.position = cutSceneChild.transform.position; }
+
+
+
+  public void DeactivateChild()
+  { child.SetActive(false); }
+
+  public void DeactivateParent()
+  { parent.SetActive(false); }
+
+  public void ActivateChild()
+  { child.SetActive(true); }
+  public void ActivateParent()
+  { parent.SetActive(true); }
+
+
+  public void ActivateCutSceneParent()
+  { cutSceneParent.SetActive(true); }
+
+  public void DeactivateCutSceneChild()
+  { cutSceneChild.SetActive(false); }
+
+  public void DeactivateCutSceneParent()
+  { cutSceneParent.SetActive(false); }
+
+  public void ActivateCutSceneChild()
+  { cutSceneChild.SetActive(true); }
+
+  public void ActivateMovement()
+  { motherMovement.enabled = true; }
+  public void DeactiavteMovement()
+  { motherMovement.enabled = false; }
+
+  public void LoadLastScene()
+  { sceneHandler.NextScene(); }
+
+  public void WindMusic()
+  { SoundManager.PlaySound(SoundManager.Sound.CutsceneWind, false, false); }
+
+  public void cutSceneAudio_Level_1()
+  {
+      SoundManager.PlaySound(SoundManager.Sound.Cutscene_SoundAudio_level_1, false, false);
+  }
+
+  public void cutSceneAudio_Level_3()
+  {
+      SoundManager.PlaySound(SoundManager.Sound.Cutscene_SoundAudio_level_3, false, false);
+  }
+
+  public void cutSceneAudio_Level_2_2()
+  {
+      SoundManager.PlaySound(SoundManager.Sound.Cutscene_SoundAudio_level_2_2, false, false);
+  }
+  public void cutSceneAudio_Level_2_1()
+  {
+      SoundManager.PlaySound(SoundManager.Sound.Cutscene_SoundAudio_level_2_1, false, false);
+  }
+  public void cutSceneAudio_Level_2_crash()
+  {
+      SoundManager.PlaySound(SoundManager.Sound.Cutscene_SoundAudio_level_2_crash, false, false);
+  }
+```
+</details>
 
 
 
@@ -422,22 +568,103 @@ Description
 ## List of Smaller Things I Did
 
 <details>
-<summary>1</summary>
-<img src="Images/BoostRing.gif" width="600"/><br/>
+<summary>Camera Transitions</summary>
+<img src="Images/Camera.gif" width="600"/><br/>
 </details>
 
 <details>
-<summary>2</summary>
-<img src="Images/Fog.gif" width="600"/><br/>
+<summary>GrabChild (Scraped)</summary>
+
+```C#
+    public GrabArea grabArea;
+    private MotherMovement motherMovement;
+    public GameObject child;
+    private Rigidbody2D childRb;
+    private float forceDecrease = 2f;
+    private int repeatCount = 0; // Variable to track the number of repetitions
+    public LayerMask childLayer;
+    public LayerMask parentLayer;
+
+    void Start()
+    {
+        grabArea = GetComponentInChildren<GrabArea>();
+        motherMovement = GetComponent<MotherMovement>();
+        childRb = child?.GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        if (grabArea.ChildGrab && child != null && motherMovement.isDashing)
+        {
+            IgnoreCollisionBetweenLayers(childLayer, parentLayer, true);
+            AttachChildToMother();
+            childRb.isKinematic = true;
+        }
+        else if (motherMovement.IsGrounded() && child != null)
+        {
+            IgnoreCollisionBetweenLayers(childLayer, parentLayer, false);
+            DetachChildFromMother();
+            childRb.isKinematic = false;
+        }
+    }
+
+    void IgnoreCollisionBetweenLayers(LayerMask layer1, LayerMask layer2, bool ignore)
+    {
+        Collider2D[] colliders1 = Physics2D.OverlapCircleAll(transform.position, 100f, layer1);
+        Collider2D[] colliders2 = Physics2D.OverlapCircleAll(transform.position, 100f, layer2);
+
+        foreach (Collider2D collider1 in colliders1)
+        {
+            foreach (Collider2D collider2 in colliders2)
+            {
+                Physics2D.IgnoreCollision(collider1, collider2, ignore);
+            }
+        }
+    }
+
+    void AttachChildToMother()
+    {
+        if (child != null)
+        {
+            child.transform.SetParent(transform);
+            MoveChildInAir();
+        }
+    }
+
+    void DetachChildFromMother()
+    {
+
+        if (child != null && child.transform.parent == transform)
+        {
+            child.transform.SetParent(null);
+            CancelInvoke("AddForceToChild");
+            InvokeRepeating("AddForceToChild", 0, 0.2f);
+        }
+    }
+
+    void AddForceToChild()
+    {
+        childRb?.AddForce(new Vector2(transform.localScale.x * forceDecrease, forceDecrease / 2f), ForceMode2D.Impulse);
+        forceDecrease -= 1f;
+        repeatCount++;
+
+        if (repeatCount >= 3)
+        {
+            CancelInvoke("AddForceToChild");
+            forceDecrease = 3;
+            repeatCount = 0;
+        }
+    }
+
+    void MoveChildInAir()
+    {
+        if (child != null)
+        {
+            Vector2 startPosition = child.transform.localPosition;
+            child.transform.localPosition = Vector2.Lerp(startPosition, new Vector2(0.7f, 0f), Time.deltaTime * 10);
+        }
+    }
+```
 </details>
 
-<details>
-<summary>3</summary>
-<img src="Images/Scanning.gif" width="600"/><br/>Description
-</details>
-
-<details>
-<summary>4</summary>
-Description
-</details>
 
