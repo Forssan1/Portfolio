@@ -33,3 +33,31 @@ Genre: Platformer, Atmospheric, Walking Simulator
 
 <img src="Images/Parenthood1.png" width = 400 /> <img src="Images/Parenthood2.png" width = 400  />
 <img src="Images/Parenthood3.png" width = 400  /> <img src="Images/Parenthood4.png" width = 400  />
+
+<br/>
+
+## Smaller Games
+
+<details>
+<summary>Kabooze</summary>
+<img src="Images/Kabooze.png" width="600"/><br/>
+Engine: Unity
+<br/>
+Genre: Arcade
+<br/>
+Made in about 3 days.
+<br/>
+My first project ever in a group. Quite proud of it considering how new i was to programming.
+</details>
+
+<details>
+<summary>Walking Trippin Fungus</summary>
+<img src="Images/WTF.png" width="600"/><br/>
+Engine: Unity
+<br/>
+Genre: Arcade
+<br/>
+Made in about 3 days.
+<br/>
+My second project ever in a group. Really overscoped making it not the best but still fun to make and i learned quite a bit.
+</details>
