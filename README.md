@@ -5,6 +5,15 @@ Click on the title of each game for more info.
 
 # Games:
 
+## Monday Simulator (Upcoming VR game)
+Developed: 2024 September - 2024 October 
+<br/>
+Engine: Unity
+<br/>
+Genre: racing, VR, Car simulator
+<br/>
+<br/>
+
 ## [Starlit Seas](StarlitSeas/README.md)
 Developed: 2024 April - 2024 June 
 <br/>
