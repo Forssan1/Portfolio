@@ -10,7 +10,7 @@ Developed: 2024 September - 2024 October
 <br/>
 Engine: Unity
 <br/>
-Genre: racing, VR, Car simulator
+Genre: Racing, VR, Car simulator
 <br/>
 <br/>
 
