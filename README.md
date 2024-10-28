@@ -14,7 +14,7 @@ Genre: Racing, VR, Car simulator
 <br/>
 <br/>
 
-## [Starlit Seas](StarlitSeas/README.md)
+## [Starlit Seas](StarlitSeas/README.md) <-- Click for more details!
 Developed: 2024 April - 2024 June 
 <br/>
 Engine: Unreal Engine 5.3
@@ -24,7 +24,7 @@ Genre: Platformer, First-Person, Fantasy
 <img src="Images/StarlitSeas1.png" width = 400 /> <img src="Images/StarlitSeas2.png" width = 400  />
 <br/>
 <br/>
-## [Parenthood](Parenthood/README.md)
+## [Parenthood](Parenthood/README.md) <-- Click for more details!
 Developed: 2023 November - 2024 January 
 <br/>
 Engine: Unity
