@@ -5,7 +5,15 @@ Click on the title of each game for more info.
 
 # Games:
 
-## Monday Simulator (Upcoming VR game)
+## multi dimensional procedural animation (upcoming project!)
+Developed: 2024 October - 2024 December
+<br/>
+Engine: Unity
+<br/>
+<br/>
+<br/>
+
+## Monday Simulator (More details upcoming!)
 Developed: 2024 September - 2024 October 
 <br/>
 Engine: Unity
