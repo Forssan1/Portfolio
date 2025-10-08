@@ -5,21 +5,21 @@ Click on the title of each game for more info.
 
 
 
-# Games(professional):
+# Games (professional/intern):
 ## [Odinfall](https://store.steampowered.com/app/2154240/Odinfall)
-Developed: 2025 december - current (working for free for experience while i have time) 
+worked on: 2024 december - current
 <br/>
 Engine: Gamemaker
 <br/>
 Genre: Rogue-lite, Twin-stick shooter
 
-<img src="Images/Odinfall.jpg" width = 400 /> 
+<img src="Images/Odinfall.jpg" width = 600 /> 
 <br/>
 <br/>
 
 
 
-# Games(student):
+# Games (student):
 
 ## [Starlit Seas](StarlitSeas/README.md) <-- Click for more details!
 Developed: 2024 April - 2024 June 
