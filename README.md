@@ -6,7 +6,7 @@ Click on the title of each game for more info.
 
 
 # Games (professional/intern):
-## [Odinfall](https://store.steampowered.com/app/2154240/Odinfall)
+## [Odinfall](Odinfall/README.md) <-- Click for more details!
 worked on: 2024 december - current
 <br/>
 Engine: Gamemaker
