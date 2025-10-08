@@ -1,26 +1,25 @@
 # **Erik Forssell Portfolio**
-An overview of the bigger games i've made.
+An overview of the bigger games i've made/worked on.
 <br/>
 Click on the title of each game for more info.
 
-# Games:
 
-## multi dimensional procedural animation (upcoming project!)
-Developed: 2024 October - 2024 December
+
+# Games(professional):
+## [Odinfall]([Odinfall/README.md](https://store.steampowered.com/app/2154240/Odinfall))
+Developed: 2025 december - current (working for free for experience while i have time) 
 <br/>
-Engine: Unity
+Engine: Gamemaker
 <br/>
+Genre: Rogue-lite, Twin-stick shooter
+
+<img src="Images/Odinfall.jpeg" width = 400 /> 
 <br/>
 <br/>
 
-## Monday Simulator (More details upcoming!)
-Developed: 2024 September - 2024 October 
-<br/>
-Engine: Unity
-<br/>
-Genre: Racing, VR, Car simulator
-<br/>
-<br/>
+
+
+# Games(student):
 
 ## [Starlit Seas](StarlitSeas/README.md) <-- Click for more details!
 Developed: 2024 April - 2024 June 
