@@ -1,5 +1,5 @@
 # Odinfall
-<img src="Images/Odinfall.jpg" width="800" />
+<img src="Odinfall.jpg" width="800" />
 
 [Steam Page](https://store.steampowered.com/app/2154240/Odinfall))
 
