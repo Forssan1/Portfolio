@@ -6,14 +6,14 @@ Click on the title of each game for more info.
 
 
 # Games(professional):
-## [Odinfall]([Odinfall/README.md](https://store.steampowered.com/app/2154240/Odinfall))
+## [Odinfall](https://store.steampowered.com/app/2154240/Odinfall)
 Developed: 2025 december - current (working for free for experience while i have time) 
 <br/>
 Engine: Gamemaker
 <br/>
 Genre: Rogue-lite, Twin-stick shooter
 
-<img src="Images/Odinfall.jpeg" width = 400 /> 
+<img src="Images/Odinfall.jpg" width = 400 /> 
 <br/>
 <br/>
 
