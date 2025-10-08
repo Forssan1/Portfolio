@@ -23,4 +23,4 @@ When a game has over 40 achievements as Odinfall has it gets quickly complicated
 Altough rich presence isn't essential it's still a nice feature i've had the opportunity to develop for Odinfall. This way your friends on steam and Discord are able to see your progression within game.
 
 <br/>
-### This list excludes the numerous bug fixes and polish tasks I contributed to during development.
+This list excludes the numerous bug fixes and polish tasks I contributed to during development.
