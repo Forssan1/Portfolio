@@ -1,7 +1,7 @@
 # Odinfall
 <img src="Odinfall.jpg" width="800" />
 
-[Steam Page](https://store.steampowered.com/app/2154240/Odinfall))
+[Steam Page](https://store.steampowered.com/app/2154240/Odinfall)
 
 <br/>
 
@@ -13,8 +13,6 @@ Ragnarok was just the beginning… of the end! Odinfall is a Viking-themed, rogu
 # Some of my contributions during development
 Due to NDA i can't go much into detail to the code but i can give a brief description of a few features/systems i've worked on
 
-<br/>
-
 ## Stats Tracker
 I've designed and implemented systems for tracking player stats such as deaths, kills, which specific weapons have been picked up and most necessary stats for other systems to use. 
 
@@ -24,4 +22,5 @@ When a game has over 40 achievements as Odinfall has it gets quickly complicated
 ## Rich Presence
 Altough rich presence isn't essential it's still a nice feature i've had the opportunity to develop for Odinfall. This way your friends on steam and Discord are able to see your progression within game.
 
+<br/>
 ### This list excludes the numerous bug fixes and polish tasks I contributed to during development.
